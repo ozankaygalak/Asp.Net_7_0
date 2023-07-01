@@ -1,0 +1,38 @@
+﻿@model List<int>
+
+<h2>Yaş Grupları Bar Chart</h2>
+
+<canvas  id="yas-chart"></canvas>
+
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('yas-chart').getContext('2d');
+        var toplamKisi = @Html.Raw(Json.Serialize(Model));
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['0-15', '15-30', '30-45', '45+'],
+                datasets: [{
+                    label: 'Yaş Grupları',
+                    data: toplamKisi,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

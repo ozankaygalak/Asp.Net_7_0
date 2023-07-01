@@ -1,0 +1,43 @@
+﻿@model List<Asp_7_Final.Models.User>
+
+@{
+    DateTime today = DateTime.Today;
+}
+
+<h2>Kişi Sıralaması:</h2>
+
+<form method="get" action="@Url.Action("Arama")">
+    <div class="input-group mb-3">
+        <input type="text" name="ad" class="form-control" placeholder="İsimle Ara" aria-describedby="button-search">
+        <input type="text" name="soyad" class="form-control" placeholder="Soyisimle Ara" aria-describedby="button-search">
+        <button class="btn btn-primary" type="submit" id="button-search">Ara</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Doğum Tarihi</th>
+            <th>Yaş</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            int age = today.Year - user.DogumTarihi.Year;
+            if (user.DogumTarihi.Month < today.Month)
+            {
+                age++;
+            }
+
+            <tr>
+                <td>@user.Ad</td>
+                <td>@user.Soyad</td>
+                <td>@user.DogumTarihi.ToShortDateString()</td>
+                <td>@age</td>
+            </tr>
+        }
+    </tbody>
+</table>
